@@ -1,0 +1,11 @@
+Windows版の起動方法
+====================
+
+1. GitHub ActionsのArtifactsから Maze3D_Windows をダウンロードします。
+2. ZIPを右クリックして「すべて展開」します。
+3. 展開したフォルダ内の Maze3D.exe を起動します。
+
+重要:
+- Maze3D.exeだけを別の場所へ移動しないでください。
+- assetsフォルダとDLLはMaze3D.exeと同じフォルダに置いてください。
+- 今回の版はWindows標準の日本語フォントを使うため、Linux専用フォントパスのエラーは出ません。
