@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Download project
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Install compiler and SDL2
         uses: msys2/setup-msys2@v2
@@ -36,24 +36,32 @@ jobs:
       - name: Build game
         run: |
           cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
-          cmake --build build
+          cmake --build build --verbose
 
       - name: Create Windows game folder
         run: |
+          set -e
+
           mkdir -p Maze3D_Windows
-          cp build/maze3d.exe Maze3D_Windows/
+
+          cp build/maze3d.exe Maze3D_Windows/Maze3D.exe
           cp -r assets Maze3D_Windows/
 
-          ldd build/maze3d.exe |
-          awk '/\/ucrt64\/bin\// {print $3}' |
-          while read dll; do
-            cp "$dll" Maze3D_Windows/
-          done
+          ldd build/maze3d.exe \
+            | awk '/\/ucrt64\/bin\// {print $3}' \
+            | sort -u \
+            | while read -r dll; do
+                if [ -f "$dll" ]; then
+                  cp "$dll" Maze3D_Windows/
+                fi
+              done
 
-          printf "TOWER MAZE 50\n\nmaze3d.exe をダブルクリックして起動してください。\n" > Maze3D_Windows/README.txt
+          printf 'TOWER MAZE 50\n\nMaze3D.exe をダブルクリックして起動してください。\n' \
+            > Maze3D_Windows/README.txt
 
       - name: Upload Windows game
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v4
         with:
           name: Maze3D_Windows
           path: Maze3D_Windows
+          if-no-files-found: error
