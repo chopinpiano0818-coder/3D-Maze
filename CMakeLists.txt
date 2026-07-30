@@ -32,28 +32,19 @@ target_compile_options(maze3d PRIVATE
 )
 
 if(WIN32)
-    # MSYS2's sdl2.pc adds SDL2main automatically. This project uses a normal
-    # C++ main(), so SDL2main must not be linked on Windows.
     target_compile_definitions(maze3d PRIVATE SDL_MAIN_HANDLED)
-    target_link_directories(maze3d PRIVATE
-        ${SDL2_LIBRARY_DIRS}
-        ${SDL2_IMAGE_LIBRARY_DIRS}
-        ${SDL2_TTF_LIBRARY_DIRS}
-        ${SDL2_MIXER_LIBRARY_DIRS}
-    )
+
     target_link_libraries(maze3d PRIVATE
         SDL2_image
         SDL2_ttf
         SDL2_mixer
         SDL2
     )
+
+    # SDL2の -mwindows より後に -mconsole を指定して、
+    # 普通の main() を入口として使う
+    target_link_options(maze3d PRIVATE -mconsole)
 else()
-    target_link_directories(maze3d PRIVATE
-        ${SDL2_LIBRARY_DIRS}
-        ${SDL2_IMAGE_LIBRARY_DIRS}
-        ${SDL2_TTF_LIBRARY_DIRS}
-        ${SDL2_MIXER_LIBRARY_DIRS}
-    )
     target_link_libraries(maze3d PRIVATE
         ${SDL2_LIBRARIES}
         ${SDL2_IMAGE_LIBRARIES}
