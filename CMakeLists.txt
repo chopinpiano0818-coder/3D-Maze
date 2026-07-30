@@ -31,9 +31,20 @@ target_compile_options(maze3d PRIVATE
     ${SDL2_MIXER_CFLAGS_OTHER}
 )
 
-target_link_libraries(maze3d PRIVATE
-    ${SDL2_LIBRARIES}
-    ${SDL2_IMAGE_LIBRARIES}
-    ${SDL2_TTF_LIBRARIES}
-    ${SDL2_MIXER_LIBRARIES}
-)
+if(WIN32)
+    target_compile_definitions(maze3d PRIVATE SDL_MAIN_HANDLED)
+
+    target_link_libraries(maze3d PRIVATE
+        SDL2_image
+        SDL2_ttf
+        SDL2_mixer
+        SDL2
+    )
+else()
+    target_link_libraries(maze3d PRIVATE
+        ${SDL2_LIBRARIES}
+        ${SDL2_IMAGE_LIBRARIES}
+        ${SDL2_TTF_LIBRARIES}
+        ${SDL2_MIXER_LIBRARIES}
+    )
+endif()
