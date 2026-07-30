@@ -16,7 +16,11 @@ jobs:
 
     steps:
       - name: Download project
+<<<<<<< HEAD
         uses: actions/checkout@v5
+=======
+        uses: actions/checkout@v4
+>>>>>>> 17a6645c54724e00b7ca154237cec6b8dbf0490a
 
       - name: Install MSYS2 and SDL2
         uses: msys2/setup-msys2@v2
@@ -70,7 +74,11 @@ jobs:
             > Maze3D_Windows/README.txt
 
       - name: Upload Windows game
+<<<<<<< HEAD
         uses: actions/upload-artifact@v6
+=======
+        uses: actions/upload-artifact@v4
+>>>>>>> 17a6645c54724e00b7ca154237cec6b8dbf0490a
         with:
           name: Maze3D_Windows
           path: Maze3D_Windows

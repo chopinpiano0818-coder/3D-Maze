@@ -239,6 +239,7 @@ Uint32 currentForwardPressStart = 0;
 bool secondForwardTap = false;
 
 TTF_Font* openFont(int size) {
+<<<<<<< HEAD
     // WindowsではOS標準の日本語フォントを優先し、
     // Raspberry Pi/LinuxではNoto/DejaVuへフォールバックする。
     // フォントファイルを配布物へ同梱する必要はない。
@@ -246,6 +247,9 @@ TTF_Font* openFont(int size) {
         "C:/Windows/Fonts/meiryo.ttc",
         "C:/Windows/Fonts/YuGothM.ttc",
         "C:/Windows/Fonts/msgothic.ttc",
+=======
+    const char* fontPaths[] = {
+>>>>>>> 17a6645c54724e00b7ca154237cec6b8dbf0490a
         "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
         "/usr/share/fonts/opentype/noto/NotoSansCJKjp-Regular.otf",
         "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
@@ -258,7 +262,10 @@ TTF_Font* openFont(int size) {
         }
     }
 
+<<<<<<< HEAD
     SDL_Log("Font could not be opened: %s", TTF_GetError());
+=======
+>>>>>>> 17a6645c54724e00b7ca154237cec6b8dbf0490a
     return nullptr;
 }
 
@@ -1602,7 +1609,11 @@ void drawMobileControls(
 
     Button mobileCrouchButton = {{70, 545, 72, 72}, "しゃがむ"};
     Button mobileJumpButton = {{SCREEN_WIDTH - 92, 615, 82, 72}, "ジャンプ"};
+<<<<<<< HEAD
     Button mobileInteractButton = {{SCREEN_WIDTH - 92, 525, 82, 72}, "取る/使う"};
+=======
+    Button mobileInteractButton = {{SCREEN_WIDTH - 92, 525, 82, 72}, "操作"};
+>>>>>>> 17a6645c54724e00b7ca154237cec6b8dbf0490a
     Button mobileRunButton = {{SCREEN_WIDTH - 184, 615, 82, 72}, "走る"};
 
     drawButton(
@@ -2754,7 +2765,11 @@ int runGame() {
 
     Button mobileCrouchButton = {{70, 545, 72, 72}, "しゃがむ"};
     Button mobileJumpButton = {{SCREEN_WIDTH - 92, 615, 82, 72}, "ジャンプ"};
+<<<<<<< HEAD
     Button mobileInteractButton = {{SCREEN_WIDTH - 92, 525, 82, 72}, "取る/使う"};
+=======
+    Button mobileInteractButton = {{SCREEN_WIDTH - 92, 525, 82, 72}, "操作"};
+>>>>>>> 17a6645c54724e00b7ca154237cec6b8dbf0490a
     Button mobileRunButton = {{SCREEN_WIDTH - 184, 615, 82, 72}, "走る"};
 
     bool running = true;
