@@ -1,0 +1,59 @@
+name: Build Windows Game
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    defaults:
+      run:
+        shell: msys2 {0}
+
+    steps:
+      - name: Download project
+        uses: actions/checkout@v6
+
+      - name: Install compiler and SDL2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          install: >-
+            mingw-w64-ucrt-x86_64-gcc
+            mingw-w64-ucrt-x86_64-cmake
+            mingw-w64-ucrt-x86_64-ninja
+            mingw-w64-ucrt-x86_64-pkg-config
+            mingw-w64-ucrt-x86_64-SDL2
+            mingw-w64-ucrt-x86_64-SDL2_image
+            mingw-w64-ucrt-x86_64-SDL2_ttf
+            mingw-w64-ucrt-x86_64-SDL2_mixer
+
+      - name: Build game
+        run: |
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+          cmake --build build
+
+      - name: Create Windows game folder
+        run: |
+          mkdir -p Maze3D_Windows
+          cp build/maze3d.exe Maze3D_Windows/
+          cp -r assets Maze3D_Windows/
+
+          ldd build/maze3d.exe |
+          awk '/\/ucrt64\/bin\// {print $3}' |
+          while read dll; do
+            cp "$dll" Maze3D_Windows/
+          done
+
+          printf "TOWER MAZE 50\n\nmaze3d.exe をダブルクリックして起動してください。\n" > Maze3D_Windows/README.txt
+
+      - name: Upload Windows game
+        uses: actions/upload-artifact@v7
+        with:
+          name: Maze3D_Windows
+          path: Maze3D_Windows
